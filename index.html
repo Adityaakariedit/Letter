@@ -1,0 +1,858 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Open Your Gift 💝</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            min-height: 100vh;
+            background: linear-gradient(135deg, #ffeef8 0%, #ffe4f1 100%);
+            overflow-x: hidden;
+            font-family: 'Georgia', serif;
+        }
+
+        /* Floating flowers and hearts */
+        .decoration {
+            position: fixed;
+            pointer-events: none;
+            z-index: 1;
+            opacity: 0.85;
+        }
+
+        .flower {
+            font-size: 40px;
+            animation: float 7s infinite ease-in-out;
+        }
+
+        .heart {
+            color: #ff69b4;
+            font-size: 32px;
+            animation: float 6s infinite ease-in-out;
+        }
+
+        @keyframes float {
+            0%, 100% { 
+                transform: translateY(0px) rotate(0deg) scale(1); 
+                opacity: 0.85;
+            }
+            25% {
+                transform: translateY(-20px) rotate(5deg) scale(1.08);
+                opacity: 1;
+            }
+            50% { 
+                transform: translateY(-35px) rotate(-5deg) scale(1.15); 
+                opacity: 0.9;
+            }
+            75% {
+                transform: translateY(-20px) rotate(3deg) scale(1.08);
+                opacity: 1;
+            }
+        }
+
+        .float-rotate {
+            animation: floatRotate 9s infinite ease-in-out;
+        }
+
+        @keyframes floatRotate {
+            0%, 100% { 
+                transform: translateY(0px) translateX(0px) rotate(0deg) scale(1); 
+            }
+            25% {
+                transform: translateY(-25px) translateX(15px) rotate(15deg) scale(1.1);
+            }
+            50% { 
+                transform: translateY(-40px) translateX(-15px) rotate(-15deg) scale(1.2); 
+            }
+            75% {
+                transform: translateY(-25px) translateX(8px) rotate(8deg) scale(1.1);
+            }
+        }
+
+        .pulse {
+            animation: pulse 3.5s infinite ease-in-out;
+        }
+
+        @keyframes pulse {
+            0%, 100% { 
+                transform: scale(1); 
+                opacity: 0.8; 
+                filter: drop-shadow(0 0 5px rgba(255,105,180,0.3));
+            }
+            50% { 
+                transform: scale(1.25); 
+                opacity: 1; 
+                filter: drop-shadow(0 0 15px rgba(255,105,180,0.8));
+            }
+        }
+
+        .spin-slow {
+            animation: spinSlow 10s infinite linear;
+        }
+
+        @keyframes spinSlow {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .bounce-float {
+            animation: bounceFloat 4s infinite ease-in-out;
+        }
+
+        @keyframes bounceFloat {
+            0%, 100% { 
+                transform: translateY(0px) scale(1); 
+            }
+            25% {
+                transform: translateY(-30px) scale(1.1);
+            }
+            50% { 
+                transform: translateY(-50px) scale(1.05); 
+            }
+            75% {
+                transform: translateY(-30px) scale(1.1);
+            }
+        }
+
+        /* Main container */
+        .container {
+            position: relative;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 10;
+        }
+
+        /* Gift box section */
+        .gift-section {
+            text-align: center;
+            transition: opacity 0.5s;
+        }
+
+        .gift-section.hidden {
+            opacity: 0;
+            pointer-events: none;
+            position: absolute;
+        }
+
+        h1 {
+            color: #d946a6;
+            font-size: 2.8em;
+            margin-bottom: 50px;
+            text-shadow: 2px 2px 8px rgba(217,70,166,0.3);
+            animation: titleGlow 2s infinite ease-in-out;
+        }
+
+        @keyframes titleGlow {
+            0%, 100% { 
+                text-shadow: 2px 2px 8px rgba(217,70,166,0.3);
+                transform: scale(1);
+            }
+            50% { 
+                text-shadow: 2px 2px 20px rgba(217,70,166,0.6), 0 0 30px rgba(255,105,180,0.4);
+                transform: scale(1.03);
+            }
+        }
+
+        .gift-box {
+            width: 200px;
+            height: 200px;
+            position: relative;
+            cursor: pointer;
+            transition: transform 0.3s;
+            animation: giftPulse 2.5s infinite ease-in-out;
+            filter: drop-shadow(0 10px 25px rgba(255,20,147,0.4));
+        }
+
+        .gift-box:hover {
+            transform: scale(1.15);
+            animation: giftWiggle 0.6s ease-in-out;
+            filter: drop-shadow(0 15px 35px rgba(255,20,147,0.6));
+        }
+
+        @keyframes giftPulse {
+            0%, 100% { 
+                transform: scale(1) translateY(0px); 
+            }
+            50% { 
+                transform: scale(1.04) translateY(-5px); 
+            }
+        }
+
+        @keyframes giftWiggle {
+            0%, 100% { transform: rotate(0deg) scale(1.15); }
+            15% { transform: rotate(-8deg) scale(1.18); }
+            30% { transform: rotate(8deg) scale(1.18); }
+            45% { transform: rotate(-6deg) scale(1.16); }
+            60% { transform: rotate(6deg) scale(1.16); }
+            75% { transform: rotate(-3deg) scale(1.15); }
+        }
+
+        .box-base {
+            width: 200px;
+            height: 150px;
+            background: linear-gradient(135deg, #ff1493, #ff69b4);
+            border-radius: 10px;
+            position: absolute;
+            bottom: 0;
+            box-shadow: 0 10px 30px rgba(255,20,147,0.3);
+        }
+
+        .box-lid {
+            width: 220px;
+            height: 60px;
+            background: linear-gradient(135deg, #ff1493, #ff69b4);
+            border-radius: 10px;
+            position: absolute;
+            top: 0;
+            left: -10px;
+            transition: all 0.8s ease;
+            transform-origin: bottom;
+            box-shadow: 0 5px 15px rgba(255,20,147,0.3);
+        }
+
+        .box-lid.open {
+            transform: rotateX(-120deg) translateY(-50px);
+        }
+
+        .ribbon-v {
+            width: 30px;
+            height: 150px;
+            background: gold;
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            bottom: 0;
+        }
+
+        .ribbon-h {
+            width: 200px;
+            height: 30px;
+            background: gold;
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+        .bow {
+            width: 60px;
+            height: 60px;
+            background: gold;
+            position: absolute;
+            top: -30px;
+            left: 50%;
+            transform: translateX(-50%);
+            border-radius: 50%;
+            box-shadow: 0 3px 10px rgba(255,215,0,0.5);
+            animation: bowSparkle 1.5s infinite ease-in-out;
+        }
+
+        @keyframes bowSparkle {
+            0%, 100% { box-shadow: 0 3px 10px rgba(255,215,0,0.5); }
+            50% { box-shadow: 0 3px 20px rgba(255,215,0,0.9), 0 0 30px rgba(255,215,0,0.6); }
+        }
+
+        .bow::before,
+        .bow::after {
+            content: '';
+            width: 40px;
+            height: 40px;
+            background: gold;
+            position: absolute;
+            border-radius: 50%;
+            top: 10px;
+        }
+
+        .bow::before {
+            left: -30px;
+        }
+
+        .bow::after {
+            right: -30px;
+        }
+
+        /* Reveal section */
+        .reveal-section {
+            display: none;
+            align-items: center;
+            justify-content: center;
+            gap: 40px;
+            animation: fadeIn 1s;
+            flex-wrap: wrap;
+        }
+
+        .reveal-section.show {
+            display: flex;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: scale(0.8); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        .teddy-bear {
+            font-size: 250px;
+            animation: teddyBounce 2s ease-out, teddyFloat 3s infinite ease-in-out 2s;
+        }
+
+        .teddy-bear img {
+            width: 500px;
+            height: auto;
+            filter: drop-shadow(0 15px 30px rgba(0,0,0,0.25));
+        }
+
+        @keyframes teddyBounce {
+            0% { 
+                transform: scale(0) rotate(-180deg); 
+                opacity: 0;
+            }
+            50% { 
+                transform: scale(1.3) rotate(10deg); 
+            }
+            65% {
+                transform: scale(0.9) rotate(-5deg);
+            }
+            80% {
+                transform: scale(1.1) rotate(3deg);
+            }
+            100% { 
+                transform: scale(1) rotate(0deg); 
+                opacity: 1;
+            }
+        }
+
+        @keyframes teddyFloat {
+            0%, 100% { 
+                transform: translateY(0px) rotate(0deg); 
+            }
+            25% {
+                transform: translateY(-15px) rotate(2deg);
+            }
+            50% { 
+                transform: translateY(-25px) rotate(-2deg); 
+            }
+            75% {
+                transform: translateY(-15px) rotate(1deg);
+            }
+        }
+
+        .letter-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            animation: slideInRight 1.5s ease-out 0.8s both;
+        }
+
+        @keyframes slideInRight {
+            from { 
+                transform: translateX(150px) rotate(20deg); 
+                opacity: 0;
+            }
+            to { 
+                transform: translateX(0) rotate(0deg); 
+                opacity: 1;
+            }
+        }
+
+        .envelope {
+            width: 320px;
+            height: 220px;
+            background: linear-gradient(135deg, #fff5f7 0%, #ffe8f0 50%, #fff0f5 100%);
+            border: 4px solid #ffb6c1;
+            border-radius: 15px;
+            position: relative;
+            cursor: pointer;
+            transition: all 0.5s ease;
+            box-shadow: 0 8px 30px rgba(255,182,193,0.4), 
+                        inset 0 2px 10px rgba(255,255,255,0.8);
+            display: inline-block;
+            animation: envelopeFloat 3s infinite ease-in-out;
+            overflow: hidden;
+        }
+
+        /* Decorative pattern on envelope */
+        .envelope::after {
+            content: '✿ ❀ ✿ ❀ ✿';
+            position: absolute;
+            bottom: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: #ffb6c1;
+            font-size: 18px;
+            opacity: 0.5;
+            letter-spacing: 10px;
+        }
+
+        @keyframes envelopeFloat {
+            0%, 100% { 
+                box-shadow: 0 8px 30px rgba(255,182,193,0.4), 
+                            inset 0 2px 10px rgba(255,255,255,0.8);
+                transform: translateY(0px) scale(1);
+            }
+            50% { 
+                box-shadow: 0 15px 45px rgba(255,182,193,0.6), 
+                            inset 0 2px 15px rgba(255,255,255,1),
+                            0 0 20px rgba(255,105,180,0.3);
+                transform: translateY(-8px) scale(1.02);
+            }
+        }
+
+        .envelope:hover {
+            transform: translateY(-15px) scale(1.08) rotate(-2deg);
+            box-shadow: 0 20px 50px rgba(255,182,193,0.7),
+                        inset 0 2px 15px rgba(255,255,255,1),
+                        0 0 30px rgba(255,105,180,0.5);
+            border-color: #ff69b4;
+            animation: envelopeExcited 0.7s ease-in-out;
+        }
+
+        @keyframes envelopeExcited {
+            0%, 100% { transform: translateY(-15px) scale(1.08) rotate(-2deg); }
+            20% { transform: translateY(-15px) scale(1.08) rotate(-5deg); }
+            40% { transform: translateY(-15px) scale(1.08) rotate(2deg); }
+            60% { transform: translateY(-15px) scale(1.08) rotate(-3deg); }
+            80% { transform: translateY(-15px) scale(1.08) rotate(1deg); }
+        }
+
+        .envelope::before {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 20% 30%, rgba(255,192,203,0.3) 0%, transparent 50%),
+                radial-gradient(circle at 80% 70%, rgba(255,182,193,0.3) 0%, transparent 50%);
+            top: 0;
+            left: 0;
+            pointer-events: none;
+        }
+
+        .envelope-heart {
+            position: absolute;
+            font-size: 80px;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            animation: heartPulse 2s infinite ease-in-out;
+            filter: drop-shadow(0 4px 8px rgba(255,105,180,0.4));
+        }
+
+        @keyframes heartPulse {
+            0%, 100% { 
+                transform: translate(-50%, -50%) scale(1); 
+                filter: drop-shadow(0 4px 8px rgba(255,105,180,0.4));
+            }
+            15% { 
+                transform: translate(-50%, -50%) scale(1.15); 
+            }
+            30% { 
+                transform: translate(-50%, -50%) scale(1); 
+            }
+            45% {
+                transform: translate(-50%, -50%) scale(1.08);
+            }
+            60% {
+                transform: translate(-50%, -50%) scale(1);
+                filter: drop-shadow(0 4px 15px rgba(255,105,180,0.7));
+            }
+        }
+
+        .envelope-label {
+            margin-top: 20px;
+            color: #ff1493;
+            font-size: 1.3em;
+            font-weight: bold;
+            text-shadow: 1px 1px 3px rgba(255,105,180,0.3);
+            animation: labelPulse 2s infinite ease-in-out;
+        }
+
+        @keyframes labelPulse {
+            0%, 100% { 
+                transform: scale(1);
+                text-shadow: 1px 1px 3px rgba(255,105,180,0.3);
+            }
+            50% { 
+                transform: scale(1.05);
+                text-shadow: 2px 2px 8px rgba(255,105,180,0.6);
+            }
+        }
+
+        /* Letter modal */
+        .letter-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(255,240,245,0.5) 0%, rgba(255,228,240,0.5) 100%);
+            backdrop-filter: blur(12px);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .letter-modal.show {
+            display: flex;
+            animation: modalFadeIn 0.6s ease-out;
+        }
+
+        @keyframes modalFadeIn {
+            from { 
+                opacity: 0;
+                backdrop-filter: blur(0px);
+            }
+            to { 
+                opacity: 1;
+                backdrop-filter: blur(12px);
+            }
+        }
+
+        .letter-content {
+            background: linear-gradient(135deg, #fffaf0 0%, #fff5f8 50%, #fffaf5 100%);
+            width: 90%;
+            max-width: 650px;
+            max-height: 85vh;
+            padding: 60px 50px;
+            border-radius: 25px;
+            box-shadow: 0 25px 70px rgba(255,105,180,0.5),
+                        inset 0 2px 20px rgba(255,255,255,0.9),
+                        0 0 40px rgba(255,182,193,0.3);
+            position: relative;
+            overflow-y: auto;
+            animation: letterUnfold 1s ease-out;
+        }
+
+        /* Corner decorations */
+        .letter-content::after {
+            content: '❀';
+            position: absolute;
+            font-size: 30px;
+            color: #ff69b4;
+            opacity: 0.4;
+            top: 15px;
+            left: 15px;
+            animation: spin-slow 20s infinite linear;
+        }
+
+        @keyframes letterUnfold {
+            0% {
+                transform: scale(0.3) rotateY(-90deg);
+                opacity: 0;
+            }
+            40% {
+                transform: scale(1.08) rotateY(-5deg);
+            }
+            70% {
+                transform: scale(0.98) rotateY(2deg);
+            }
+            100% {
+                transform: scale(1) rotateY(0deg);
+                opacity: 1;
+            }
+        }
+
+        .close-letter {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            font-size: 40px;
+            cursor: pointer;
+            color: #ff69b4;
+            background: rgba(255,255,255,0.8);
+            border: 2px solid #ffb6c1;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+            font-weight: bold;
+            z-index: 10;
+            box-shadow: 0 4px 10px rgba(255,105,180,0.3);
+        }
+
+        .close-letter:hover {
+            transform: rotate(90deg) scale(1.15);
+            color: #fff;
+            background: #ff69b4;
+            border-color: #ff1493;
+            box-shadow: 0 6px 20px rgba(255,105,180,0.6);
+        }
+
+        .letter-text {
+            font-size: 1.3em;
+            line-height: 2;
+            color: #4a4a4a;
+            text-align: center;
+            font-family: 'Georgia', 'Times New Roman', serif;
+            position: relative;
+            padding: 0 10px;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+        }
+
+        .letter-text h2 {
+            color: #ff1493;
+            margin-bottom: 25px;
+            font-size: 2.2em;
+            font-family: 'Brush Script MT', cursive;
+            text-shadow: 1px 1px 3px rgba(255,105,180,0.3);
+            animation: titleShimmer 3s infinite ease-in-out;
+        }
+
+        @keyframes titleShimmer {
+            0%, 100% { 
+                text-shadow: 1px 1px 3px rgba(255,105,180,0.3);
+            }
+            50% { 
+                text-shadow: 2px 2px 8px rgba(255,105,180,0.6), 0 0 15px rgba(255,20,147,0.3);
+            }
+        }
+
+        .letter-text p {
+            margin: 20px 0;
+            position: relative;
+            animation: fadeInUp 0.8s ease-out both;
+        }
+
+        .letter-text p:nth-child(2) { animation-delay: 0.2s; }
+        .letter-text p:nth-child(3) { animation-delay: 0.4s; }
+        .letter-text p:nth-child(4) { animation-delay: 0.6s; }
+        .letter-text p:nth-child(5) { animation-delay: 0.8s; }
+        .letter-text p:nth-child(6) { animation-delay: 1s; }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Decorative hearts in letter */
+        .letter-decoration {
+            position: absolute;
+            font-size: 20px;
+            opacity: 0.2;
+            animation: float 8s infinite ease-in-out;
+        }
+
+        .letter-decoration:nth-child(1) { top: 10%; left: 5%; animation-delay: 0s; }
+        .letter-decoration:nth-child(2) { top: 30%; right: 8%; animation-delay: 1s; }
+        .letter-decoration:nth-child(3) { bottom: 15%; left: 8%; animation-delay: 2s; }
+        .letter-decoration:nth-child(4) { bottom: 30%; right: 5%; animation-delay: 1.5s; }
+
+        /* Decorative elements in specific positions */
+        .deco-1 { top: 10%; left: 10%; animation-delay: 0s; }
+        .deco-2 { top: 20%; right: 15%; animation-delay: 1s; }
+        .deco-3 { top: 60%; left: 8%; animation-delay: 2s; }
+        .deco-4 { top: 70%; right: 10%; animation-delay: 0.5s; }
+        .deco-5 { top: 30%; left: 20%; animation-delay: 1.5s; }
+        .deco-6 { top: 50%; right: 20%; animation-delay: 2.5s; }
+        .deco-7 { top: 80%; left: 15%; animation-delay: 3s; }
+        .deco-8 { top: 15%; right: 25%; animation-delay: 1.2s; }
+        .deco-9 { top: 40%; left: 5%; animation-delay: 0.8s; }
+        .deco-10 { top: 25%; right: 8%; animation-delay: 2.2s; }
+        .deco-11 { top: 65%; right: 18%; animation-delay: 1.8s; }
+        .deco-12 { top: 85%; right: 12%; animation-delay: 0.3s; }
+        .deco-13 { top: 12%; left: 25%; animation-delay: 2.8s; }
+        .deco-14 { top: 45%; left: 12%; animation-delay: 1.3s; }
+        .deco-15 { top: 55%; right: 25%; animation-delay: 2.1s; }
+        .deco-16 { top: 75%; left: 22%; animation-delay: 0.9s; }
+        .deco-17 { top: 35%; right: 30%; animation-delay: 1.6s; }
+        .deco-18 { top: 90%; left: 8%; animation-delay: 2.4s; }
+        .deco-19 { top: 8%; right: 5%; animation-delay: 1.1s; }
+        .deco-20 { top: 48%; left: 28%; animation-delay: 0.6s; }
+        .deco-21 { top: 18%; left: 15%; animation-delay: 2.6s; }
+        .deco-22 { top: 62%; right: 6%; animation-delay: 1.4s; }
+        .deco-23 { top: 28%; left: 8%; animation-delay: 0.4s; }
+        .deco-24 { top: 72%; right: 28%; animation-delay: 2.9s; }
+        .deco-25 { top: 38%; right: 12%; animation-delay: 1.9s; }
+        .deco-26 { top: 52%; left: 18%; animation-delay: 0.7s; }
+        .deco-27 { top: 82%; left: 25%; animation-delay: 2.3s; }
+        .deco-28 { top: 22%; right: 22%; animation-delay: 1.7s; }
+        .deco-29 { top: 68%; left: 6%; animation-delay: 0.2s; }
+        .deco-30 { top: 42%; right: 16%; animation-delay: 2.7s; }
+        .deco-31 { top: 14%; left: 32%; animation-delay: 1.0s; }
+        .deco-32 { top: 58%; right: 32%; animation-delay: 2.0s; }
+        .deco-33 { top: 88%; right: 20%; animation-delay: 0.1s; }
+        .deco-34 { top: 5%; left: 18%; animation-delay: 2.5s; }
+        .deco-35 { top: 78%; left: 10%; animation-delay: 1.5s; }
+    </style>
+</head>
+<body>
+    <!-- Decorative floating flowers and hearts -->
+    <div class="decoration flower deco-1">🌹</div>
+    <div class="decoration heart deco-2 pulse">❤️</div>
+    <div class="decoration flower deco-3 float-rotate">🌺</div>
+    <div class="decoration heart deco-4 bounce-float">💕</div>
+    <div class="decoration flower deco-5">🌸</div>
+    <div class="decoration flower deco-6 float-rotate">🌷</div>
+    <div class="decoration heart deco-7 pulse">💖</div>
+    <div class="decoration flower deco-8 spin-slow">🌼</div>
+    <div class="decoration heart deco-9">💗</div>
+    <div class="decoration flower deco-10 float-rotate">🌹</div>
+    <div class="decoration flower deco-11 bounce-float">🌺</div>
+    <div class="decoration heart deco-12 pulse">💝</div>
+    <div class="decoration flower deco-13">🌸</div>
+    <div class="decoration heart deco-14 bounce-float">💓</div>
+    <div class="decoration flower deco-15 float-rotate">🌷</div>
+    <div class="decoration heart deco-16 pulse">💞</div>
+    <div class="decoration flower deco-17 spin-slow">🌼</div>
+    <div class="decoration flower deco-18">🌹</div>
+    <div class="decoration heart deco-19 bounce-float">💕</div>
+    <div class="decoration flower deco-20 float-rotate">🌺</div>
+    <div class="decoration heart deco-21 pulse">❤️</div>
+    <div class="decoration flower deco-22">🌸</div>
+    <div class="decoration flower deco-23 float-rotate">🌷</div>
+    <div class="decoration heart deco-24 bounce-float">💖</div>
+    <div class="decoration flower deco-25 spin-slow">🌼</div>
+    <div class="decoration heart deco-26 pulse">💗</div>
+    <div class="decoration flower deco-27 float-rotate">🌹</div>
+    <div class="decoration heart deco-28">💝</div>
+    <div class="decoration flower deco-29 bounce-float">🌺</div>
+    <div class="decoration flower deco-30">🌸</div>
+    <div class="decoration heart deco-31 pulse">💓</div>
+    <div class="decoration flower deco-32 float-rotate">🌷</div>
+    <div class="decoration heart deco-33 bounce-float">💞</div>
+    <div class="decoration flower deco-34 spin-slow">🌼</div>
+    <div class="decoration heart deco-35 pulse">💕</div>
+
+    <div class="container">
+        <!-- Gift Box Section -->
+        <div class="gift-section" id="giftSection">
+             <h3>( wear earbuds for better experience )</h3>
+            <h1>Open the Gift</h1>
+            <div class="gift-box" id="giftBox">
+                <div class="box-lid" id="boxLid">
+                    <div class="bow"></div>
+                </div>
+                <div class="box-base">
+                    <div class="ribbon-v"></div>
+                    <div class="ribbon-h"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Reveal Section (Teddy Bear + Letter) -->
+        <div class="reveal-section" id="revealSection">
+            <div class="teddy-bear">
+                <!-- 
+                ====================================================================
+                PUT YOUR TEDDY BEAR IMAGE HERE:
+                Replace "teddy-bear.png" with your actual image filename
+                Supported formats: .png, .jpg, .jpeg, .gif, .webp
+                
+                Make sure your image is in the SAME FOLDER as this HTML file
+                For example, if your image is named "my-teddy.png", change it to:
+                <img src="my-teddy.png" alt="Teddy Bear">
+                ====================================================================
+                -->
+                <img src="teddy-bear.png" alt="Teddy Bear">
+            </div>
+            <div class="letter-container">
+                <div class="envelope" id="envelope">
+                    <div class="envelope-heart">💖</div>
+                </div>
+                <div class="envelope-label">Click to Read the Letter</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Letter Modal -->
+    <div class="letter-modal" id="letterModal">
+        <div class="letter-content">
+            <div class="letter-decoration">🌹</div>
+            <div class="letter-decoration">💕</div>
+            <div class="letter-decoration">🌸</div>
+            <div class="letter-decoration">💖</div>
+            <button class="close-letter" id="closeLetter">&times;</button>
+            <div class="letter-text">
+                <h2>My Dearest, Chuhiya</h2>
+                <p>Every moment with you feels like a beautiful dream. You bring joy to my heart and light to my life.</p>
+                <p>Mujhe tumse ishq is liye nahi hua ke tum khaas ho,Ishq is liye hua kyunki tumhare saath main khud hoon.
+                    Na koi darr, na koi jhooth,bas tum aur main
+                </p>
+                <p>Tumhare hothon ki muskaan dheere-dheere meri aadat ban gayi hai, Din guzarta hai toh kami mehsoos hoti hai.
+                    Kehne ko toh bas ek muskaan hai,Par mere liye poori duniya wahi ruk jaati hai</p>
+                <p>This gift is a small token of my endless love and appreciation for you.</p>
+                <p>Agar kabhi thak jao duniya se, Toh yaad rakhna.
+                    Kahin ek dil hai jo sirf tumhara sukoon dhoondhta hai</p>
+                <p style="margin-top: 30px;">With all my warmth, Jab main paas na hoon, yeh tumhe yaad dilaye ke koi hai jo tumhara khayal rakhta hai</p>
+                <p style="font-style: italic; color: #d946a6;">Forever Yours Anu💕</p>
+            </div>
+        </div>
+    </div>
+    <!-- 
+    ====================================================================
+    HOW TO ADD YOUR BACKGROUND SONG:
+    ====================================================================
+    1. Place your audio file (e.g., song.mp3) in the same folder as this HTML file
+    2. Uncomment the <audio> tag below and replace "your-song.mp3" with your actual filename
+    3. The song will automatically play when the gift is opened
+    
+    Example: If your song is named "romantic-song.mp3", change it to:
+    <audio id="bgMusic" src="romantic-song.mp3" loop></audio>
+    
+    Supported formats: .mp3, .wav, .ogg
+    ====================================================================
+    -->
+    
+    <audio id="bgMusic" src="song.mp3" loop></audio>
+
+    <script>
+        const giftBox = document.getElementById('giftBox');
+        const boxLid = document.getElementById('boxLid');
+        const giftSection = document.getElementById('giftSection');
+        const revealSection = document.getElementById('revealSection');
+        const envelope = document.getElementById('envelope');
+        const letterModal = document.getElementById('letterModal');
+        const closeLetter = document.getElementById('closeLetter');
+        const bgMusic = document.getElementById('bgMusic');
+
+        // Open gift box
+        giftBox.addEventListener('click', () => {
+            boxLid.classList.add('open');
+            
+            setTimeout(() => {
+                giftSection.classList.add('hidden');
+                revealSection.classList.add('show');
+                
+                if (bgMusic) {
+                    bgMusic.play();
+                }
+            }, 1000);
+        });
+
+        // Open letter
+        envelope.addEventListener('click', () => {
+            letterModal.classList.add('show');
+        });
+
+        // Close letter
+        closeLetter.addEventListener('click', () => {
+            letterModal.classList.remove('show');
+        });
+
+        // Close letter when clicking outside
+        letterModal.addEventListener('click', (e) => {
+            if (e.target === letterModal) {
+                letterModal.classList.remove('show');
+            }
+        });
+    </script>
+</body>
+</html>
